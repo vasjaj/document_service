@@ -17,7 +17,7 @@
     <% @documents.each do |document| %>
       <tr>
         <td><%= document.name %></td>
-        <td><%= document.description %></td>
+        <td><%= document.description&.slice(0, 30) %></td>
         <td>
           <div class="btn-group">
             <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

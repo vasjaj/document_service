@@ -10,12 +10,16 @@
       </ul>
     </div>
   <% end %>
- 
-  <%= form.text_field :name %>
-  <%= form.text_field :description %>
+  
+  <%= form.label :name %>
+  <%= form.text_field :name, {class: "form-control col-sm-6" } %>
+  <%= form.label :description %>
+  <%= form.text_area :description, {class: "form-control col-sm-6", rows: 10} %>
+  <br>
   <%= form.file_field :files, multiple: true %>
-
+  <br>
+  <br>
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Submit", { class: "btn btn-primary btn-lg col-sm-6 bg-secondary"} %>
   </div>
 <% end %>
