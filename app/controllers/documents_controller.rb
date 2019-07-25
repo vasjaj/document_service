@@ -67,7 +67,7 @@ class DocumentsController < ApplicationController
     @document.destroy
     respond_to do |format|
       format.html do
-        redirect_to(documents_url, notice: "Document was successfully destroyed."
+        redirect_to(documents_url, notice: "Document was successfully destroyed.")
       end
 
       format.json { head :no_content }

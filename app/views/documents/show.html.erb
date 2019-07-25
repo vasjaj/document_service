@@ -4,15 +4,46 @@
   </div>
 <% end %>
 
-<% @document.files.each do |file|%>
-  <%= link_to "Preview", rails_blob_path(file, disposition: 'preview') %>
-  <br>
-  <%= link_to file.filename, rails_blob_path(file, disposition: 'attachment') %>
-  <br>
-  <%= link_to 'Remove', delete_file_document_path(file.id),
-                method: :delete,
-                data: { confirm: 'Are you sure?' } %>
-  <br>
-<% end %>
-<%= link_to 'Edit', edit_document_path(@document) %>
-<%= link_to 'Back', documents_path %>
+<div class="card text-center">
+  <div class="card-header">
+    <strong>Document created by:</strong>
+    <%= @document.user&.email %>
+  </div>
+  <div class="card-body">
+    <h3 class="card-title"><%= @document.name %></h5>
+    <p class="card-text text-left"><%= @document.description %></p>
+    <%if current_user == @document.user and current_user%>
+      <%= link_to "Edit", edit_document_path(@document), {class: "btn btn-primary  bg-secondary w-25"} %>
+      <%= link_to "Delete", document_path(@document), {class: "btn btn-danger w-25", method: :delete, data: { confirm: 'Are you sure?' }}  %>
+    <% end %>
+  </div>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="Name"></th>
+      <th scope="Preview"></th>
+      <th scope="Download"></th>
+      <th scope="Remove"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @document.files.each do |file|%>
+      <tr>
+        <td>
+          <%= link_to "Preview", rails_blob_path(file, disposition: 'preview'), {class: "btn btn-primary col-md-12"} %>
+        </td>
+        <td>
+          <%= link_to file.filename, rails_blob_path(file, disposition: 'attachment'), {class: "btn btn-success col-md-12"} %>
+        </td>
+        <td>
+          <%= link_to 'Remove', delete_file_document_path(file.id),
+                      method: :delete,
+                      data: { confirm: 'Are you sure?' },
+                      class: "btn btn-danger  bg-secondary col-md-12" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
