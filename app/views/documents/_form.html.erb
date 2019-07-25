@@ -10,6 +10,10 @@
       </ul>
     </div>
   <% end %>
+ 
+  <%= form.text_field :name %>
+  <%= form.text_field :description %>
+  <%= form.file_field :files, multiple: true %>
 
   <div class="actions">
     <%= form.submit %>
