@@ -1,5 +1,7 @@
 class DocumentsController < ApplicationController
   before_action :set_document, only: [:show, :edit, :update, :destroy]
+  before_action :set_file, only: [:delete_file]
+  before_action :check_user, only[:new]
 
   # GET /documents
   # GET /documents.json
@@ -25,6 +27,8 @@ class DocumentsController < ApplicationController
   # POST /documents.json
   def create
     @document = Document.new(document_params)
+
+    @document.user = current_user
 
     respond_to do |format|
       if @document.save
@@ -61,12 +65,42 @@ class DocumentsController < ApplicationController
     end
   end
 
+  def delete_file
+    @file.purge
+    
+    redirect_back(fallback_location: documents_url)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_document
       @document = Document.find(params[:id])
+
+      return if AuthUtils.valid_user_for_document?(current_user, @document)
+
+      redirect_back(
+        fallback_location: documents_url,
+        notice: "You are not the owner of the document"
+      )
     end
 
+    def set_file
+      @file = ActiveStorage::Attachment.find(params[:id])
+
+      return if AuthUtils.valid_user_for_file?(current_user, @file)
+
+      redirect_back(
+        fallback_location: documents_url,
+        notice: "You are not the owner of the file"
+      )
+    end
+
+    def check_user
+      redirect_to(
+        sessions_path,
+        "You must be signed-in in order to crerate documents"
+      ) if current_user.blank?
+    end
     # Never trust parameters from the scary internet, only allow the white list through.
     def document_params
       params.fetch(:document, {}).permit(:name, :description, files: [])

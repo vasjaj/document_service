@@ -1,8 +1,12 @@
 <p id="notice"><%= notice %></p>
 <% @document.files.each do |file|%>
-  <%= link_to file.filename, rails_blob_path(file, disposition: 'preview') %>
+  <%= link_to "Preview", rails_blob_path(file, disposition: 'preview') %>
   <br>
   <%= link_to file.filename, rails_blob_path(file, disposition: 'attachment') %>
+  <br>
+  <%= link_to 'Remove', delete_file_document_path(file.id),
+                method: :delete,
+                data: { confirm: 'Are you sure?' } %>
   <br>
 <% end %>
 <%= link_to 'Edit', edit_document_path(@document) %>
