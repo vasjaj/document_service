@@ -32,7 +32,10 @@ class DocumentsController < ApplicationController
 
     respond_to do |format|
       if @document.save
-        format.html { redirect_to @document, notice: 'Document was successfully created.' }
+        format.html do
+          redirect_to @document, notice: 'Document was successfully created.'
+        end
+
         format.json { render :show, status: :created, location: @document }
       else
         format.html { render :new }
@@ -46,7 +49,10 @@ class DocumentsController < ApplicationController
   def update
     respond_to do |format|
       if @document.update(document_params)
-        format.html { redirect_to @document, notice: 'Document was successfully updated.' }
+        format.html do
+          redirect_to @document, notice: 'Document was successfully updated.'
+        end
+
         format.json { render :show, status: :ok, location: @document }
       else
         format.html { render :edit }
@@ -60,7 +66,10 @@ class DocumentsController < ApplicationController
   def destroy
     @document.destroy
     respond_to do |format|
-      format.html { redirect_to documents_url, notice: 'Document was successfully destroyed.' }
+      format.html do
+        redirect_to(documents_url, notice: "Document was successfully destroyed."
+      end
+
       format.json { head :no_content }
     end
   end
@@ -68,7 +77,16 @@ class DocumentsController < ApplicationController
   def delete_file
     @file.purge
     
-    redirect_back(fallback_location: documents_url)
+    respond_to do |format|
+      format.html do 
+        redirect_back(
+          fallback_location: documents_url,
+          otice: "File was successfuly deleted."
+        )
+      end
+
+      format.json { head :no_content }
+    end
   end
 
   private
