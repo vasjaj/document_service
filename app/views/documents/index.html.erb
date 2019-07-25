@@ -1,25 +1,37 @@
-<p id="notice"><%= notice %></p>
+<% if notice.present?%>
+  <div class="alert alert-danger" role="alert">
+    <p id="notice"><%= notice %></p>
+  </div>
+<% end %>
 
-<h1>Documents</h1>
-
-<table>
+<h1><h1><span class="badge badge-secondary col-sm-12 bg-dark text-left ">All Documents</span></h1></h1>
+<table class="table table-striped">
   <thead>
     <tr>
-      <th colspan="3"></th>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col"></th>
     </tr>
   </thead>
-
   <tbody>
     <% @documents.each do |document| %>
       <tr>
-        <td><%= link_to 'Show', document %></td>
-        <td><%= link_to 'Edit', edit_document_path(document) %></td>
-        <td><%= link_to 'Destroy', document, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= document.name %></td>
+        <td><%= document.description %></td>
+        <td>
+          <div class="btn-group">
+            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Action
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item"><%= link_to 'Show', document %></a>
+              <a class="dropdown-item"><%= link_to 'Edit', edit_document_path(document) %></a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item"><%= link_to 'Destroy', document, method: :delete, data: { confirm: 'Are you sure?' } %></a>
+            </div>
+          </div>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Document', new_document_path %>

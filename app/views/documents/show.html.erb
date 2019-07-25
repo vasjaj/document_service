@@ -1,4 +1,9 @@
-<p id="notice"><%= notice %></p>
+<% if notice.present?%>
+  <div class="alert alert-danger" role="alert">
+    <p id="notice"><%= notice %></p>
+  </div>
+<% end %>
+
 <% @document.files.each do |file|%>
   <%= link_to "Preview", rails_blob_path(file, disposition: 'preview') %>
   <br>

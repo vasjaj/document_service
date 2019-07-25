@@ -1,7 +1,7 @@
 class DocumentsController < ApplicationController
   before_action :set_document, only: [:show, :edit, :update, :destroy]
   before_action :set_file, only: [:delete_file]
-  before_action :check_user, only: [:new]
+  before_action :check_user, only: [:new, :create]
 
   # GET /documents
   # GET /documents.json
@@ -96,10 +96,7 @@ class DocumentsController < ApplicationController
     end
 
     def check_user
-      redirect_to(
-        sessions_path,
-        "You must be signed-in in order to crerate documents"
-      ) if current_user.blank?
+      redirect_to(new_user_session_path) if current_user.blank?
     end
     # Never trust parameters from the scary internet, only allow the white list through.
     def document_params

@@ -1,11 +1,10 @@
-<h2>Sign up</h2>
-
+<h1><span class="badge badge-secondary bg-dark col-sm-3 text-left">Sign up</span></h1>
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+  <%= devise_error_messages! %>
 
   <div class="field">
     <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= f.email_field :email, {autofocus: true, autocomplete: "email", class: "form-control col-sm-3"}  %>
   </div>
 
   <div class="field">
@@ -13,16 +12,17 @@
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>
     <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
+    <%= f.password_field :password,{ autocomplete: "off", class: "form-control col-sm-3" } %>
   </div>
 
   <div class="field">
     <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+    <%= f.password_field :password_confirmation, { autocomplete: "off", class: "form-control col-sm-3" }%>
   </div>
+  <br>
 
   <div class="actions">
-    <%= f.submit "Sign up" %>
+    <%= f.submit "Sign up",  { class: "btn btn-primary btn-lg col-sm-3 bg-success"} %>
   </div>
 <% end %>
 

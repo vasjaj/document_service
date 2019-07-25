@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root "documents#index"
+ 
   devise_for :users
 
   resources :documents do
