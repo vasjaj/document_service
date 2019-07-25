@@ -1,7 +1,7 @@
 class DocumentsController < ApplicationController
   before_action :set_document, only: [:show, :edit, :update, :destroy]
   before_action :set_file, only: [:delete_file]
-  before_action :check_user, only[:new]
+  before_action :check_user, only: [:new]
 
   # GET /documents
   # GET /documents.json
