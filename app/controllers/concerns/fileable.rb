@@ -6,7 +6,6 @@ module Fileable
   end
 
   def delete_file
-    binding.pry
     @file.purge
     
     redirect_back(
@@ -18,7 +17,7 @@ module Fileable
   private
 
     def set_file
-      @file = ActiveStorage::Attachment.find(params[:id])
+      @file = ActiveStorage::Attachment.find(params[:file_id])
 
       return if AuthUtils.valid_user_for_file?(current_user, @file)
 

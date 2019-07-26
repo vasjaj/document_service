@@ -23,3 +23,5 @@
     <%= form.submit "Submit", { class: "btn btn-primary btn-lg col-sm-6 bg-secondary"} %>
   </div>
 <% end %>
+
+  <%= render "files/file_table", {files: document.files } %>

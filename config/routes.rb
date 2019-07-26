@@ -3,10 +3,11 @@ Rails.application.routes.draw do
  
   devise_for :users
 
-  resources :documents do
+  concern :fileable do
     member do
-      delete :delete_file
+      delete "delete_file/:file_id", action: :delete_file, as: :delete_file
     end
   end
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  resources :documents, concerns: :fileable
 end

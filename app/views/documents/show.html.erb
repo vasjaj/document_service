@@ -19,31 +19,4 @@
   </div>
 </div>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="Name"></th>
-      <th scope="Preview"></th>
-      <th scope="Download"></th>
-      <th scope="Remove"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @document.files.each do |file|%>
-      <tr>
-        <td>
-          <%= link_to "Preview", rails_blob_path(file, disposition: 'preview'), {class: "btn btn-primary col-md-12"} %>
-        </td>
-        <td>
-          <%= link_to file.filename, rails_blob_path(file, disposition: 'attachment'), {class: "btn btn-success col-md-12"} %>
-        </td>
-        <td>
-          <%= link_to 'Remove', delete_file_document_path(file.id),
-                      method: :delete,
-                      data: { confirm: 'Are you sure?' },
-                      class: "btn btn-danger  bg-secondary col-md-12" %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= render "files/file_table", {files: @document.files } %>
