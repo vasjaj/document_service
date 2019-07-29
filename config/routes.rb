@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   concern :fileable do
     member do
-      delete "delete_file/:file_id", action: :delete_file, as: :delete_file
+      delete "files/:file_id", action: :delete_file, as: :delete_file
     end
   end
 
