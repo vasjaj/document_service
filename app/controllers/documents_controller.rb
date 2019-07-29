@@ -1,5 +1,5 @@
 class DocumentsController < ApplicationController
-  include Fileable
+  include FileableController
 
   before_action :set_document, only: [:show, :edit, :update, :destroy]
   before_action :check_user, only: [:new, :create]

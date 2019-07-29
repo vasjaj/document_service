@@ -1,4 +1,4 @@
-module Fileable
+module FileableController
   extend ActiveSupport::Concern
 
   included do
