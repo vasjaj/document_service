@@ -1,5 +1,5 @@
 class Document < ApplicationRecord
   include FileableModel
 
-  belongs_to :user, optional: true
+  belongs_to :user
 end
