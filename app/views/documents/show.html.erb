@@ -12,7 +12,7 @@
   <div class="card-body">
     <h3 class="card-title"><%= @document.name %></h5>
     <p class="card-text text-left"><%= @document.description %></p>
-    <%if current_user == @document.user and current_user%>
+    <% if current_user && (current_user == @document.user)  %>
       <%= link_to "Edit", edit_document_path(@document), {class: "btn btn-primary  bg-secondary w-25"} %>
       <%= link_to "Delete", document_path(@document), {class: "btn btn-danger w-25", method: :delete, data: { confirm: 'Are you sure?' }}  %>
     <% end %>
