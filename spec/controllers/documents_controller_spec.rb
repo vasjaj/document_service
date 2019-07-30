@@ -27,7 +27,7 @@ RSpec.describe DocumentsController, type: :request do
         sign_in(user)
       end
 
-      it "renders users documents" do
+      it "renders document" do
         show
   
         expect(response).to render_template(:show)
@@ -40,9 +40,10 @@ RSpec.describe DocumentsController, type: :request do
         sign_in(user_1)
       end
 
-      it "renders users documents" do
+      it "does not render document" do
         show
-  
+        
+        expect(response.body).to_not include(document.name)
         expect(response).to redirect_to(documents_path)
       end
     end
@@ -83,7 +84,7 @@ RSpec.describe DocumentsController, type: :request do
         sign_in(user)
       end
 
-      it "renders users documents" do
+      it "renders documents edit form" do
         edit
   
         expect(response).to render_template(:edit)
@@ -95,9 +96,10 @@ RSpec.describe DocumentsController, type: :request do
         sign_in(user_1)
       end
 
-      it "renders users documents" do
+      it "does not render documents edit form" do
         edit
-  
+        
+        expect(response).to_not render_template(:edit)
         expect(response).to redirect_to(documents_path)
       end
     end
@@ -124,7 +126,7 @@ RSpec.describe DocumentsController, type: :request do
       end
 
       context "when params are valid" do
-        it "creates new document" do
+        it "submits new document" do
           expect {create_request}.to(
             change {Document.all.count}.by(1)
           )
@@ -134,7 +136,7 @@ RSpec.describe DocumentsController, type: :request do
       context "when params are not valid" do
         let(:params) { {name: "", description: ""} }
 
-        it "does not create new document" do
+        it "does not submit new document" do
           expect {create_request}.to(
             change {Document.all.count}.by(0)
           )
@@ -145,9 +147,12 @@ RSpec.describe DocumentsController, type: :request do
     end
 
     context "when user is not signed-in" do
-      it "redirects back" do
+      it "does not submit new document" do
         create_request
 
+        expect {create_request}.to(
+          change {Document.all.count}.by(0)
+        )
         expect(response).to redirect_to(new_user_session_path)
       end
     end
@@ -180,7 +185,7 @@ RSpec.describe DocumentsController, type: :request do
       context "when params are not valid" do
         let(:params) { {name: "", description: ""} }
 
-        it "renders edit template" do
+        it "does not update existing document" do
           update
 
           expect {update}.to_not(
@@ -198,9 +203,11 @@ RSpec.describe DocumentsController, type: :request do
         sign_in(user_1)
       end
 
-      it "renders users documents" do
-        update
-  
+      it "does not update existing document" do
+        expect {update}.to_not(
+          change { [document.reload.name, document.reload.description] }
+        )
+
         expect(response).to redirect_to(documents_path)
       end
     end
