@@ -10,7 +10,7 @@ module FileableController
     
     redirect_back(
       fallback_location: documents_url,
-      otice: "File was successfuly deleted."
+      notice: "File was successfuly deleted."
     )
   end
 
